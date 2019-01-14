@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div >
+    {% include 'admin_menu.html' %}
+
+    <div class="col-md-10" >
+        <div class="jumbotron" style="padding-top: 1px">
+          <h3 >上传随机图片</h3>
+         <hr>
+
+          <form method="post" role="form" enctype="multipart/form-data">
+              <div class="form_group">
+                  {{ form.random_img.label }}
+                  {{ form.random_img }}
+                  {% for err in form.random_img.errors %}
+                  <h5 style="color: red">{{ err }}</h5>
+                  {% endfor %}
+              </div>
+            <br>
+              <div class="form_group">
+                  {{ form.csrf_token }}
+                  {{ form.submit }}
+              </div>
+       </form>
+       {% for message in get_flashed_messages(with_categories=Flase, category_filter=['ok']) %}
+       <h5 style="color: green">{{message}}</h5>
+       {% endfor %}
+       <br>
+       {% if imgurls %}
+           {% for imgurl in imgurls %}
+               <img src="{{ imgurl.img_url }}" height="100">
+               <a href="{{ url_for('admin_random_img_del', id=imgurl.id) }}">删除</a>
+           {% endfor %}
+       {% endif %}
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js_code %}
+<script type="text/javascript">
+    $(document).ready(
+      function(){
+      }
+    );
+    $('#item_15').addClass('list-group-item-warning')
+
+</script>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% import "macro_page.html" as paginator%}
+{% block content %}
+<h1></h1>
+
+
+<div >
+
+
+	<div class="row">
+
+		<div class="col-md-9 " >
+			<ul class="list-group" >
+			<li class="list-group-item" id="item_1"><p class="muted">
+				<div class="carousel-inner" style="max-height: 200px">
+					<img src="http://wx3.sinaimg.cn/large/0062Ep7ely1fz0g2c1qawj31hc0u0jyk.jpg" alt="First slide" class="img-thumbnail">
+				</div>
+			<h4>·	关于我</h4>
+			<hr>
+			{% if num.desc %}
+			<div class="text-muted">
+				{{num.desc|safe}}
+			</div>
+			{% endif %}
+			<hr>
+			<form method="post" role="form" enctype="multipart/form-data">
+				{% for message in get_flashed_messages(with_categories=Flase, category_filter=['err']) %}
+				<p style="color: red">{{message}}</p>
+				{% endfor %}
+				{% for message in get_flashed_messages(with_categories=Flase, category_filter=['ok']) %}
+				<p style="color: green">{{message}}</p>
+				{% endfor %}
+
+				<div class="form_group">
+					{{ form.about_msg.label }}
+					{{ form.about_msg }}
+					{% for err in form.about_msg.errors %}
+					<h5 style="color: red">{{ err }}</h5>
+					{% endfor %}
+				</div>
+
+				<div class="form_group">
+					{{ form.csrf_token }}
+					{{ form.submit }}
+				</div>
+		</form>
+
+		{% for aboutmsg in aboutmsgs.items %}
+		{% if aboutmsg.user_name %}
+		<hr>
+		<small>
+		{{ aboutmsg.addtime }}
+		</small>
+		<br>
+		{{ aboutmsg.user_name }}-----
+		<small>
+		{{ aboutmsg.content }}&nbsp;&nbsp;
+		{% if aboutmsg.user_name == session.get('user_name') %}
+		<a href="{{ url_for('about_del_msg', id=aboutmsg.id) }}">删除</a>
+		{% endif %}
+		</small>
+		{% endif %}
+		{% endfor %}
+		<!-- page- -->
+        <div class="col-md-12 text-center">
+            {{ paginator.paginate(aboutmsgs, 'about_me') }}
+
+        </div>
+			</li>
+
+			</ul>
+		</div>
+		<div class="col-md-3" >
+			<ul class="list-group" >
+			  <li class="list-group-item" id="item_1"><h3>网站统计</h3>
+				  <hr>
+				  <div class="text-muted">
+					  <p>当前访问量:&nbsp;&nbsp;{{num.click_num}}</p>
+    				  <p>相册总量:&nbsp;&nbsp;{{album_num}}</p>
+    				  <p>文章总量:&nbsp;&nbsp;{{article_num}}</p>
+    				  <p>页面总量:&nbsp;&nbsp;30</p>
+				  </div>
+
+			  </li>
+
+
+			</ul>
+
+		</div>
+
+
+	</div>
+
+
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block js_code %}
+<br>
+<div class="copy">
+	<p>  托管于<a href="http://www.miitbeian.gov.cn/" target="_blank" >阿里云. </a></p>
+	<p>© Copyright © 2018 听风博客 <a href="http://www.miitbeian.gov.cn/" target="_blank" >辽ICP备18017671号</a></p>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(
+      function(){
+      }
+    );
+    $('#nav-10').addClass('active')
+
+</script>
+{% endblock %}

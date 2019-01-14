@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div >
+    {% include 'admin_menu.html' %}
+
+    <div class="col-md-10" >
+        <div class="jumbotron" style="padding-top: 1px">
+          <h3 >修改个人介绍</h3>
+         <hr>
+
+          <form method="post" role="form" enctype="multipart/form-data">
+              {% for message in get_flashed_messages(with_categories=Flase, category_filter=['ok']) %}
+              <h4 style="color: green">{{message}}</h4>
+              {% endfor %}
+
+              <div class="form_group">
+                  {{ form.about_desc.label }}
+                  {{ form.about_desc }}
+                  {% for err in form.about_desc.errors %}
+                  <h5 style="color: red">{{ err }}</h5>
+                  {% endfor %}
+              </div>
+
+              <div class="form_group">
+                  {{ form.csrf_token }}
+                  {{ form.submit }}
+              </div>
+       </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js_code %}
+<script type="text/javascript">
+    $(document).ready(
+      function(){
+      }
+    );
+    $('#item_14').addClass('list-group-item-warning')
+
+</script>
+{% endblock %}

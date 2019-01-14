@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <div >
+
+        {% include 'admin_menu.html' %}
+
+        <div class="col-md-10" >
+            <div class="jumbotron" style="padding-top: 1px">
+              <h3>文章管理</h3>
+
+                <a href="{{ url_for('article_create') }}" style="display: inline-block">
+                创建文章
+                </a>
+                &nbsp;&nbsp;
+                <a href="{{ url_for('article_list',page=1) }}" style="display: inline-block">
+                文章列表
+                </a>
+                <hr >
+                <h1></h1>
+                    <div >
+                   {% for article in articles %}
+
+                       <div class="row">
+
+                           <div class="col-md-2 visible-lg-block visible-md-block" >
+                               <a href="{{ url_for('article_content', id=article.id) }}" >
+                               <img class="img-rounded" src="{{article.article_img_url}}"
+                               height="150" title="{{ article.article_title }}" ></a>
+                           </div>
+                           <div class="col-md-10" >
+
+                               <ul class="list-group" >
+                                 <li class="list-group-item" id="item_1"><a href="{{ url_for('article_content', id=article.id) }}">
+                                     <h2>{{ article.article_title }}</h2></a>
+                                     <small>
+                                     时间:{{ article.addtime }}
+                                     &nbsp;/&nbsp;作者:{{article.article_writer}}&nbsp;/&nbsp;{{ article.click_num }}人阅读
+                                 </small><a href="{{ url_for('user_article_del', id=article.id) }}">删除</a></li>
+                                 <li class="list-group-item" id="item_1">{{ article.article_desc }}</li>
+                               </ul>
+
+                           </div>
+                       </div>
+
+                   {% endfor %}
+                    </div>
+           </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block js_code %}
+<script type="text/javascript">
+    $(document).ready(
+      function(){
+      }
+    );
+    $('#item_12').addClass('list-group-item-warning')
+
+</script>
+{% endblock %}

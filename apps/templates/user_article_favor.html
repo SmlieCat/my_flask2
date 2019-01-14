@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+
+<div >
+    {% include 'user_menu.html' %}
+    <div class="col-md-10" >
+    <div class="jumbotron " style="padding-top: 1px" >
+
+      <h3>我收藏的文章</h3>
+
+      <hr >
+
+      {% for love_article in love_articlelist %}
+
+          <div class="row">
+
+              <div class="col-md-2 visible-lg-block visible-md-block" >
+                  <a href="{{ url_for('article_content', id=love_article.id) }}" >
+                  <img class="img-rounded" src="{{love_article.article_img_url}}"
+                  height="150" title="{{ love_article.article_title }}" ></a>
+              </div>
+              <div class="col-md-10" >
+
+                  <ul class="list-group" >
+                    <li class="list-group-item" id="item_1"><a href="{{ url_for('article_content', id=love_article.id) }}" >
+                        <h2>{{ love_article.article_title }}</h2></a>
+                        <small>时间:{{ love_article.addtime }}&nbsp;/&nbsp;作者:{{love_article.article_writer}}
+                            &nbsp;/&nbsp;{{ love_article.click_num }}人阅读&nbsp;/&nbsp;{{love_article.love_num}}人收藏</small>&nbsp;&nbsp;
+                            <small>
+                                <a href="{{ url_for('user_article_favor_del', id=love_article.id) }}">
+                                取消收藏
+                                </a>
+                            </small>
+                    </li>
+                    <li class="list-group-item" id="item_1">{{ love_article.article_desc }}</li>
+                  </ul>
+
+              </div>
+          </div>
+
+      {% endfor %}
+
+      </div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block js_code %}
+<script type="text/javascript">
+    $(document).ready(
+      function(){
+      }
+    );
+    $('#item_6').addClass('list-group-item-warning')
+
+</script>
+{% endblock %}
